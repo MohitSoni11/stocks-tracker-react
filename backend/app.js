@@ -17,8 +17,10 @@ const port = 5000;
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:5173']
+  origin: ['https://stocks-tracker-react.vercel.app/']
 };
+
+// Previous origin: 'http://localhost:5173'
 
 app.use(cors(corsOptions));
 app.use(express.json());
