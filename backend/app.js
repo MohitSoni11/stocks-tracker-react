@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const uri = process.env.MONGODB_URI;
 
 const cors = require('cors');
-app.options('*', cors());
 
 const { spawn } = require('child_process');
 const yahooFinance = require('yahoo-finance2').default;
@@ -27,6 +26,8 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true
 }));
+
+app.options('*', cors());
 
 // MongoDB password: YIK13x0DFx332537
 // MongoDB connection string: mongodb+srv://mohitksoni04:9teGhahcsRCXwOpz@cluster0.kfl9a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
