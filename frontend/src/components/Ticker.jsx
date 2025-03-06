@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { API_URL } from '../config';
 
 function Ticker() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -15,7 +16,7 @@ function Ticker() {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/add-ticker', {
+    const response = await fetch(`${API_URL}/add-ticker`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

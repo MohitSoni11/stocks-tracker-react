@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { API_URL } from '../config';
 
 function Delete({deleteAccountTypes}) {
   const handleAccounts = async (e) => {
-    const response = await fetch('http://localhost:5000/delete-accounts');
+    const response = await fetch(`${API_URL}/delete-accounts`);
     const data = await response.json();
 
     if (data.success) {
@@ -11,7 +12,7 @@ function Delete({deleteAccountTypes}) {
   }
 
   const handleTickers = async (e) => {
-    const response = await fetch('http://localhost:5000/delete-tickers');
+    const response = await fetch(`${API_URL}/delete-tickers`);
     const data = await response.json();
 
     if (data.success) {
@@ -20,7 +21,7 @@ function Delete({deleteAccountTypes}) {
   }
 
   const handleTransactionTypes = async (e) => {
-    const response = await fetch('http://localhost:5000/delete-transaction-types');
+    const response = await fetch(`${API_URL}/delete-transaction-types`);
     const data = await response.json();
 
     if (data.success) {
@@ -29,7 +30,7 @@ function Delete({deleteAccountTypes}) {
   }
 
   const handleLots = async (e) => {
-    const response = await fetch('http://localhost:5000/delete-lots');
+    const response = await fetch(`${API_URL}/delete-lots`);
     const data = await response.json();
 
     if (data.success) {

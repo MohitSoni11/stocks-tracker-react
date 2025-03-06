@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { API_URL } from '../config';
 
 function TransactionType({}) {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -15,7 +16,7 @@ function TransactionType({}) {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/add-transaction-type', {
+    const response = await fetch(`${API_URL}/add-transaction-type`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

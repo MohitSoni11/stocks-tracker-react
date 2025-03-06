@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { API_URL } from '../config';
 
 function Sell({ tickerData }) {
   const [selectedTicker, setSelectedTicker] = useState('');
@@ -15,7 +16,7 @@ function Sell({ tickerData }) {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const fetchLots = async () => {
-    const lots = await fetch(`http://localhost:5000/fetch-lots?ticker=${selectedTicker}`);
+    const lots = await fetch(`${API_URL}/fetch-lots?ticker=${selectedTicker}`);
     const data = await lots.json();
     setLotData(data.lots);
   };
@@ -26,7 +27,7 @@ function Sell({ tickerData }) {
       return;
     }
 
-    const price = await fetch(`http://localhost:5000/fetch-current-price?ticker=${selectedTicker}`);
+    const price = await fetch(`${API_URL}/fetch-current-price?ticker=${selectedTicker}`);
     const data = await price.json();
     setCurrentPrice(data.price);
   }
@@ -61,7 +62,7 @@ function Sell({ tickerData }) {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/sell', {
+    const response = await fetch(`${API_URL}/sell`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

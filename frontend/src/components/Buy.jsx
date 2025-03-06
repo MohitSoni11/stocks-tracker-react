@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { API_URL } from '../config';
 
 function Buy({ accountData, transactionTypeData, tickerData }) {  
   const [selectedAccount, setSelectedAccount] = useState('');
@@ -41,7 +42,7 @@ function Buy({ accountData, transactionTypeData, tickerData }) {
         return;
       }
 
-      const info = await fetch(`http://localhost:5000/fetch-ticker-info?ticker=${selectedTicker}`);
+      const info = await fetch(`${API_URL}/fetch-ticker-info?ticker=${selectedTicker}`);
       const data = await info.json();
     
       setTickerInfo(data.info); 
@@ -78,7 +79,7 @@ function Buy({ accountData, transactionTypeData, tickerData }) {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/buy', {
+    const response = await fetch(`${API_URL}/buy`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
