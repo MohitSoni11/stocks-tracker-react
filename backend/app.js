@@ -17,7 +17,8 @@ const yahooFinance = require('yahoo-finance2').default;
 ///////////////////////////////
 
 // Previously was an empty string
-const API_URL = 'https://stocks-tracker-react.onrender.com/';
+// https://stocks-tracker-react.onrender.com/
+const API_URL = 'http://localhost:5000/';
 
 //////////////////////////////////
 /********* Creating App *********/
