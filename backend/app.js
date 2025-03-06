@@ -4,7 +4,10 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const mongoose = require('mongoose');
+const uri = process.env.MONGODB_URI;
+
 const cors = require('cors');
 const { spawn } = require('child_process');
 const yahooFinance = require('yahoo-finance2').default;
@@ -21,6 +24,8 @@ const corsOptions = {
 };
 
 // Previous origin: 'http://localhost:5173'
+// MongoDB password: YIK13x0DFx332537
+// MongoDB connection string: mongodb+srv://mohitksoni04:9teGhahcsRCXwOpz@cluster0.kfl9a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -38,7 +43,7 @@ yahooFinance.suppressNotices([
 /********* Setting up Database *********/
 /////////////////////////////////////////
 
-mongoose.connect('mongodb://localhost:27017/db')
+mongoose.connect(uri)
 .then(() => (
     console.log('MongoDB connected.')
 ))
