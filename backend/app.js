@@ -12,6 +12,13 @@ const cors = require('cors');
 const { spawn } = require('child_process');
 const yahooFinance = require('yahoo-finance2').default;
 
+///////////////////////////////
+/********* Constants *********/
+///////////////////////////////
+
+// Previously was an empty string
+const API_URL = 'https://stocks-tracker-react.onrender.com/';
+
 //////////////////////////////////
 /********* Creating App *********/
 //////////////////////////////////
@@ -174,7 +181,7 @@ const Sell = mongoose.model('sell', sellSchema);
 /********* Updating Database *********/
 ///////////////////////////////////////
 
-app.post('/add-account-type', async (req, res) => {
+app.post(`${API_URL}/add-account-type`, async (req, res) => {
   const results = await Type.find({ name: req.body.name });
   
   // Adding type if it is not already present in the database
@@ -194,7 +201,7 @@ app.post('/add-account-type', async (req, res) => {
   }
 });
 
-app.post('/add-account', async (req, res) => {
+app.post(`${API_URL}/add-account`, async (req, res) => {
   const results = await Account.find({ name: req.body.name });
 
   // Adding account if it is not already present in the database
@@ -215,7 +222,7 @@ app.post('/add-account', async (req, res) => {
   }
 });
 
-app.post('/add-transaction-type', async (req, res) => {
+app.post(`${API_URL}/add-transaction-type`, async (req, res) => {
   const results = await TransactionType.find({ name: req.body.name });
 
   // Adding transaction type if it is not already present in the database
@@ -235,7 +242,7 @@ app.post('/add-transaction-type', async (req, res) => {
   }
 });
 
-app.post('/add-ticker', async (req, res) => {
+app.post(`${API_URL}/add-ticker`, async (req, res) => {
   const results = await Ticker.find({ ticker: req.body.ticker });
 
   // Adding ticker if it is not already present in the database
@@ -255,7 +262,7 @@ app.post('/add-ticker', async (req, res) => {
   }
 });
 
-app.post('/buy', async (req, res) => {
+app.post(`${API_URL}/buy`, async (req, res) => {
   const now = new Date();
   const providedDate = new Date(req.body.date);
   providedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
@@ -297,7 +304,7 @@ app.post('/buy', async (req, res) => {
   });
 });
 
-app.post('/sell', async (req, res) => {
+app.post(`${API_URL}/sell`, async (req, res) => {
   data = {
     ticker: req.body.ticker,
     lot: req.body.lot,
@@ -327,7 +334,7 @@ app.post('/sell', async (req, res) => {
   });
 });
 
-app.get('/delete-account-types', async (req, res) => {
+app.get(`${API_URL}/delete-account-types`, async (req, res) => {
   const result = await Type.deleteMany({});
   console.log(`${result.deletedCount} account types deleted.`);
   res.json({
@@ -335,7 +342,7 @@ app.get('/delete-account-types', async (req, res) => {
   });
 });
 
-app.get('/delete-accounts', async (req, res) => {
+app.get(`${API_URL}/delete-accounts`, async (req, res) => {
   const result = await Account.deleteMany({});
   console.log(`${result.deletedCount} accounts deleted.`);
   res.json({
@@ -343,7 +350,7 @@ app.get('/delete-accounts', async (req, res) => {
   });
 });
 
-app.get('/delete-tickers', async (req, res) => {
+app.get(`${API_URL}/delete-tickers`, async (req, res) => {
   const result = await Ticker.deleteMany({});
   console.log(`${result.deletedCount} tickers deleted.`);
   res.json({
@@ -351,7 +358,7 @@ app.get('/delete-tickers', async (req, res) => {
   });
 });
 
-app.get('/delete-transaction-types', async (req, res) => {
+app.get(`${API_URL}/delete-transaction-types`, async (req, res) => {
   const result = await TransactionType.deleteMany({});
   console.log(`${result.deletedCount} transaction types deleted.`);
   res.json({
@@ -359,7 +366,7 @@ app.get('/delete-transaction-types', async (req, res) => {
   });
 });
 
-app.get('/delete-lots', async (req, res) => {
+app.get(`${API_URL}/delete-lots`, async (req, res) => {
   const result = await Lot.deleteMany({});
   const result2 = await Sell.deleteMany({});
   console.log(`${result.deletedCount} buy lots deleted.`);
@@ -373,35 +380,35 @@ app.get('/delete-lots', async (req, res) => {
 /********* Fetching Information from Database *********/
 ////////////////////////////////////////////////////////
 
-app.get('/fetch-account-types', async (req, res) => {
+app.get(`${API_URL}/fetch-account-types`, async (req, res) => {
   const accountTypes = await Type.find({});
   res.json({
     types: accountTypes
   });
 });
 
-app.get('/fetch-accounts', async (req, res) => {
+app.get(`${API_URL}/fetch-accounts`, async (req, res) => {
   const accounts = await Account.find({});
   res.json({
     accounts: accounts
   });
 });
 
-app.get('/fetch-transaction-types', async (req, res) => {
+app.get(`${API_URL}/fetch-transaction-types`, async (req, res) => {
   const transactionTypes = await TransactionType.find({});
   res.json({
     types: transactionTypes
   });
 });
 
-app.get('/fetch-tickers', async (req, res) => {
+app.get(`${API_URL}/fetch-tickers`, async (req, res) => {
   const tickers = await Ticker.find({});
   res.json({
     tickers: tickers
   });
 });
 
-app.get('/fetch-lots', async (req, res) => {
+app.get(`${API_URL}/fetch-lots`, async (req, res) => {
   const ticker = req.query.ticker?.toUpperCase();
   const lots = await Lot.aggregate([
     {
@@ -421,7 +428,7 @@ app.get('/fetch-lots', async (req, res) => {
 /********* Fetching Information from YFinance *********/
 ////////////////////////////////////////////////////////
 
-app.get('/fetch-ticker-info', async (req, res) => {
+app.get(`${API_URL}/fetch-ticker-info`, async (req, res) => {
   const ticker = req.query.ticker?.toUpperCase();
   const quote = await yahooFinance.quote(ticker);
 
@@ -435,7 +442,7 @@ app.get('/fetch-ticker-info', async (req, res) => {
   });
 });
 
-app.get('/fetch-current-price', async (req, res) => {
+app.get(`${API_URL}/fetch-current-price`, async (req, res) => {
   const ticker = req.query.ticker?.toUpperCase();
   const quote = await yahooFinance.quoteSummary(ticker);
 
