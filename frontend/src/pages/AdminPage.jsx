@@ -5,18 +5,19 @@ import Account from '../components/Account'
 import TransactionType from '../components/TransactionType'
 import Ticker from '../components/Ticker'
 import Delete from '../components/Delete'
+import { API_URL } from '../config';
 
 function AdminPage() {
   const [typeData, setTypeData] = useState([]);
 
   const fetchAccountTypes = async () => {
-    const response = await fetch('http://localhost:5000/fetch-account-types');
+    const response = await fetch(`${API_URL}/fetch-account-types`);
     const data = await response.json();
     setTypeData(data.types);
   };
 
   const deleteAccountTypes = async () => {
-    const response = await fetch('http://localhost:5000/delete-account-types');
+    const response = await fetch(`${API_URL}/delete-account-types`);
     const data = await response.json();
 
     if (data.success) {

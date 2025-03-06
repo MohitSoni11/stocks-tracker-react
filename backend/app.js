@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 const uri = process.env.MONGODB_URI;
 
 const cors = require('cors');
+app.options('*', cors());
+
 const { spawn } = require('child_process');
 const yahooFinance = require('yahoo-finance2').default;
 
@@ -19,11 +21,13 @@ const yahooFinance = require('yahoo-finance2').default;
 const port = 5000;
 const app = express();
 
-const corsOptions = {
-  origin: ['https://stocks-tracker-react.vercel.app/']
-};
+app.use(cors({
+  origin: ['https://stocks-tracker-react.vercel.app', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true
+}));
 
-// Previous origin: 'http://localhost:5173'
 // MongoDB password: YIK13x0DFx332537
 // MongoDB connection string: mongodb+srv://mohitksoni04:9teGhahcsRCXwOpz@cluster0.kfl9a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 

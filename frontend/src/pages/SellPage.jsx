@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Sell from '../components/Sell'
+import { API_URL } from '../config';
 
 function SellPage() {
   const [tickerData, setTickerData] = useState([]);
 
   const fetchTickers = async () => {
-    const response = await fetch('http://localhost:5000/fetch-tickers');
+    const response = await fetch(`${API_URL}/fetch-tickers`);
     const data = await response.json();
     setTickerData(data.tickers);
   };
