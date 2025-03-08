@@ -379,7 +379,6 @@ app.get('/delete-lots', async (req, res) => {
 
 app.get('/fetch-account-types', async (req, res) => {
   const accountTypes = await Type.find({});
-  res.header('Access-Control-Allow-Origin', 'https://stocks-tracker-react.vercel.app');
   res.json({
     types: accountTypes
   });
