@@ -20,17 +20,35 @@ const yahooFinance = require('yahoo-finance2').default;
 const port = 5000;
 const app = express();
 
-app.options('*', cors());
-
 // MongoDB password: YIK13x0DFx332537
 // MongoDB connection string: mongodb+srv://mohitksoni04:9teGhahcsRCXwOpz@cluster0.kfl9a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
-app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://stocks-tracker-react.vercel.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).send();
+  }
+  next();
+});
+
+app.use(cors({
+  origin: ['https://stocks-tracker-react.vercel.app', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true
+}));
+
+app.options('*', cors());
 
 app.use(express.json());
 
 app.listen(process.env.PORT || port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+  console.log(`Server running at http://localhost:${process.env.PORT || port}/`);
 });
 
 // So that yahooFinance doesn't provide useless messages in the terminal
