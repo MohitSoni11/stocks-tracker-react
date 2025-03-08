@@ -29,7 +29,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.listen(process.env.port || port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
 
