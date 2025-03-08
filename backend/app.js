@@ -25,12 +25,7 @@ app.options('*', cors());
 // MongoDB password: YIK13x0DFx332537
 // MongoDB connection string: mongodb+srv://mohitksoni04:9teGhahcsRCXwOpz@cluster0.kfl9a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
-app.use(cors({
-  origin: ['https://stocks-tracker-react.vercel.app', 'http://localhost:5173'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true
-}));
+app.use(cors());
 
 app.use(express.json());
 
