@@ -23,19 +23,6 @@ const app = express();
 // MongoDB password: YIK13x0DFx332537
 // MongoDB connection string: mongodb+srv://mohitksoni04:9teGhahcsRCXwOpz@cluster0.kfl9a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://stocks-tracker-react.vercel.app');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).send();
-  }
-  next();
-});
-
 app.use(cors({
   origin: ['https://stocks-tracker-react.vercel.app', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -392,6 +379,7 @@ app.get('/delete-lots', async (req, res) => {
 
 app.get('/fetch-account-types', async (req, res) => {
   const accountTypes = await Type.find({});
+  res.header('Access-Control-Allow-Origin', 'https://stocks-tracker-react.vercel.app');
   res.json({
     types: accountTypes
   });
